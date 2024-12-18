@@ -5,6 +5,7 @@ import customtkinter as ctk
 from PIL import Image
 import customtkinter
 from random import *
+from hPyT import *
 import pywinstyles
 import webbrowser
 import requests
@@ -17,31 +18,31 @@ import json
 import sys
 import os
 
-
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         
         # < --- Self settings --- >
         self.title('Astri@Hider')
-        self.overrideredirect(True)
-        self.attributes('-topmost', onTop)
-        #self.iconbitmap()
         self.geometry('690x440')
+
+        self.overrideredirect(True)
+        self.iconbitmap(self.appIcon)
+
+        self.attributes('-topmost', onTop)
 
 
         # < --- Topbar --- > 
-        
-        topbarFrame = customtkinter.CTkFrame(self, width = 690, height=30, fg_color= black, corner_radius=0)
+        topbarFrame = customtkinter.CTkFrame(self, width = 690, height = 30, fg_color = black, bg_color = black, corner_radius = 0)
         topbarFrame.place(relx = 0, rely = 0)
 
         topbarFrame.bind('<ButtonPress-1>', self.drag)
         topbarFrame.bind('<B1-Motion>', self.move)
         topbarFrame.bind('<ButtonRelease-1>', self.stop)
         
-        line = self.divline(self, 0.067, self.green_line)
+        self.divline(self, 0.067, self.green_line)
         
-        titleLabel = customtkinter.CTkLabel(topbarFrame, text='Astri@Hider', text_color = white, font = ('Papyrus', 19))
+        titleLabel = customtkinter.CTkLabel(topbarFrame, text = 'Astri@Hider', text_color = white, font = self.font2)
         titleLabel.place(relx = 0.02)
 
         tbcloseButton = customtkinter.CTkButton(topbarFrame, text = '✕', width = 30, height = 30, fg_color = black, hover_color = red, corner_radius = 0, command = self.close)
@@ -57,11 +58,11 @@ class App(customtkinter.CTk):
 
         # < --- Main frame --- > 
         
-        innerFrame = customtkinter.CTkFrame(self, width = 690, height = 410, fg_color = grey, corner_radius=0)
+        innerFrame = customtkinter.CTkFrame(self, width = 690, height = 410, fg_color = grey, bg_color = grey, corner_radius = 0)
         innerFrame.place(rely = 0.068)
         
         global mainFrame
-        mainFrame = customtkinter.CTkFrame(self, width = 620, height = 350, fg_color = grey2, corner_radius = 0)
+        mainFrame = customtkinter.CTkFrame(self, width = 620, height = 350, fg_color = grey2, bg_color = grey2, corner_radius = 0)
         mainFrame.place(relx = 0.05, rely = 0.13)
         
         
@@ -76,8 +77,11 @@ class App(customtkinter.CTk):
         global ToolsBarFrame
         ToolsBarFrame = customtkinter.CTkFrame(mainFrame, width = 620, height = 25, fg_color = grey4, corner_radius = 0)
         ToolsBarFrame.place(rely = 0, relx = 0)
+
+        VersionLabel = customtkinter.CTkLabel(ToolsBarFrame, width = 40, height = 23, fg_color = grey4, text = f'v{version}', text_color = white)
+        VersionLabel.place(relx = 0.93)
         
-        self.divline(ToolsBarFrame, 0.9, self.black_line)
+        self.divline(ToolsBarFrame, 0.97, self.black_line)
         
         
         # < --- Tools Bar : File Frame --- >
@@ -272,7 +276,6 @@ class App(customtkinter.CTk):
             CreditsFrame.lift()
         
         global CreditsFrame
-        
         CreditsFrame = customtkinter.CTkFrame(mainFrame, width = 100, height=69, fg_color = grey4, bg_color = grey2, corner_radius=3)
         ToolsBarFrames.append(CreditsFrame)
         
@@ -283,14 +286,10 @@ class App(customtkinter.CTk):
         CreditsButton = customtkinter.CTkButton(ToolsBarFrame, width = 40, height = 23, fg_color  = grey4, hover_color=  black2, text = 'Credits', corner_radius=0, command = dropdown_credits_frame)
         CreditsButton.place(relx = 0.33)
         
-        VersionLabel = customtkinter.CTkLabel(ToolsBarFrame, width = 40, height = 23, fg_color = grey4, text = f'v{version}')
-        VersionLabel.place(relx = 0.93)
-        
         MenuButtons = []
     
     
         # < --- Menu : Features --- >
-        
         
         def hideMessagePage():
             self.delFrames()
@@ -631,6 +630,7 @@ class App(customtkinter.CTk):
     
     
     assetsPath = 'data\\assets\\'
+    appIcon = assetsPath + 'hider.ico'
     green_line = customtkinter.CTkImage(Image.open(assetsPath + 'green_line.png'), size=(690, 1))
     black_line = customtkinter.CTkImage(Image.open(assetsPath + 'black_line.png'), size=(620, 1))
     upload_btn = customtkinter.CTkImage(Image.open(assetsPath + 'upload.png'), size = (20, 20))
@@ -694,6 +694,7 @@ if __name__ == '__main__':
         'data\\assets\\upload.png',
         'data\\assets\\clear.png',
         'data\\assets\\home.png',
+        'data\\assets\\hider.ico',
         
         'data\\configuration\\directories.json',
         'data\\configuration\\settings.json',
@@ -745,7 +746,7 @@ if __name__ == '__main__':
 
         if r != version:
             if messagebox.askokcancel('Update Available', 'A new version is available. Wanna download it?'):
-                webbrowser.open(release)
+                webbrowser.open('https://github.com/astros3x/Astri-hider')
 
     except Exception as e:
         callErrorbox('ERROR', "Version check failed http error / offline.\nPress 'Ok' to continue.")
@@ -793,5 +794,4 @@ if __name__ == '__main__':
     transparency = settings['transparency']
     transparencyValue = settings['transparencyValue']
 
-    
     App().mainloop()
