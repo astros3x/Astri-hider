@@ -12,7 +12,7 @@
 Astri@Hider is a tool written in python that allows you to hide secret text messages in a JPG file without actually changing the image. It has a clean and flat [GUI](https://github.com/TomSchimansky/CustomTkinter) that make it intuitive and easy to use. ![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg) ![version](https://img.shields.io/badge/python-3.9-green)
 <div align="center">
 
-<img src="https://github.com/user-attachments/assets/196147fb-7a15-4dd6-aae8-dd83b604f569">
+<img src="https://github.com/user-attachments/assets/5d54b058-da7a-4508-89b2-f3396973350c">
 
 
 </div>
